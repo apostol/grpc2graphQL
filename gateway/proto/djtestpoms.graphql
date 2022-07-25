@@ -1,0 +1,66 @@
+type djtestpoms_Product {
+  id: Int
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+type djtestpoms_ProductRequest {
+  apiKey: String
+  product: djtestpoms_Product
+}
+type djtestpoms_CreateProductRequest {
+  apiKey: String
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+type djtestpoms_ProductStreamResponse {
+  _product: djtestpoms_ProductStreamResponse__product
+}
+union djtestpoms_ProductStreamResponse__product = djtestpoms_Product
+type djtestpoms_GetProductsRequest {
+  apiKey: String
+  ids: [Int]
+}
+type djtestpoms_SearchProductsRequest {
+  apiKey: String
+  name: String
+}
+type djtestpoms_Category {
+  id: Int
+  name: String
+}
+type djtestpoms_EmptyRequest {
+  apiKey: String
+}
+enum djtestpoms_OrderStatus {
+  CREATED
+  READY_TO_SHIP
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+type djtestpoms_Order {
+  id: Int
+  status: djtestpoms_OrderStatus
+  items: [Int_Int_map]
+}
+type Int_Int_map {
+  key: Int
+  value: Int
+}
+type djtestpoms_CreateOrderRequest {
+  apiKey: String
+  items: [Int_Int_map]
+}
+type Int_Int_map {
+  key: Int
+  value: Int
+}
+type djtestpoms_ChangeOrderStatusRequest {
+  apiKey: String
+  orderId: Int
+  status: djtestpoms_OrderStatus
+}

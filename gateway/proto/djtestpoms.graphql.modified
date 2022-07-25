@@ -1,0 +1,99 @@
+type djtestpoms_Product {
+  id: Int
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+
+input djtestpoms_Product_input {
+  id: Int
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+
+
+input djtestpoms_ProductRequest {
+  apiKey: String
+  product: djtestpoms_Product_input
+}
+input djtestpoms_CreateProductRequest {
+  apiKey: String
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+type djtestpoms_ProductStreamResponse {
+  _product: djtestpoms_ProductStreamResponse__product
+}
+union djtestpoms_ProductStreamResponse__product = djtestpoms_Product
+input djtestpoms_GetProductsRequest {
+  apiKey: String
+  ids: [Int]
+}
+input djtestpoms_SearchProductsRequest {
+  apiKey: String
+  name: String
+}
+type djtestpoms_Category {
+  id: Int
+  name: String
+}
+input djtestpoms_EmptyRequest {
+  apiKey: String
+}
+enum djtestpoms_OrderStatus {
+  CREATED
+  READY_TO_SHIP
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+type djtestpoms_Order {
+  id: Int
+  status: djtestpoms_OrderStatus
+  items: [Int_Int_map]
+}
+
+type Int_Int_map {
+  key: Int
+  value: Int
+}
+
+input Int_Int_map_input {
+  key: Int
+  value: Int
+}
+input djtestpoms_CreateOrderRequest {
+  apiKey: String
+  items: [Int_Int_map_input]
+}
+input djtestpoms_ChangeOrderStatusRequest {
+  apiKey: String
+  orderId: Int
+  status: djtestpoms_OrderStatus
+}
+
+# the schema allows the following query:
+  type Query {
+    Products(request: djtestpoms_GetProductsRequest): [djtestpoms_Product],
+    Categories(request: djtestpoms_EmptyRequest): [djtestpoms_Category],
+    Orders(request: djtestpoms_EmptyRequest): [djtestpoms_Order]
+  }
+
+  type Mutation {
+    CreateProduct(request: djtestpoms_CreateProductRequest): djtestpoms_Product,
+    EditProduct(request: djtestpoms_ProductRequest): djtestpoms_Product,
+    CreateOrder(request: djtestpoms_CreateOrderRequest): djtestpoms_Order,
+    ChangeOrderStatus(request: djtestpoms_ChangeOrderStatusRequest): djtestpoms_Order
+  }
+
+  # we need to tell the server which types represent the root query
+  # and root mutation types. We call them RootQuery and RootMutation by convention.
+  schema {
+    query: Query,
+    mutation: Mutation
+  }
