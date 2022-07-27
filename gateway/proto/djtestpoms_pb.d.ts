@@ -1,5 +1,5 @@
 // package: djtestpoms
-// file: proto/djtestpoms.proto
+// file: djtestpoms.proto
 
 /* tslint:disable */
 /* eslint-disable */

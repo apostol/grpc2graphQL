@@ -2,12 +2,12 @@ import { readFileSync } from 'node:fs';
 import { ApolloServer, AuthenticationError } from "apollo-server";
 import djTestPomsAPI from './grpcClient';
 
-const typeDefs = readFileSync('proto/djtestpoms.graphql.modified').toString();
+const typeDefs = readFileSync('proto/djtestpoms.modified.graphql').toString();
 const resolvers = {
   Query: {
     Products: async (_source:any, args:any , _context:any ) => {
       //[14, 17, 32, 42]
-      return _context.dataSources.djTestAPI.getProducts(args.request.ids);
+      return _context.dataSources.djTestAPI.getProducts(args.products.ids);
     },
   },
   //Mutation: {},

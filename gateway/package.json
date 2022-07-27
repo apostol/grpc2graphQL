@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "proto:generate": "npx grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ --ts_out=./ proto/djtestpoms.proto & proto2graphql --input proto/djtestpoms.proto --output proto/djtestpoms.graphql",
-    "proto:clear": "npx rimraf proto/*pb* proto/*.graphql",
+    "proto:generate": "npx grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./proto --ts_out=grpc_js:./proto --grpc_out=grpc_js:./proto -I ./proto proto/*.proto & proto2graphql --input proto/djtestpoms.proto --output proto/djtestpoms.graphql",
+    "proto:clear": "npx rimraf proto/*pb*",
     "start": "export API_KEY=myAPI && export AUTH_TOKEN=Token  && ts-node src/index.ts"
   },
   "author": "",

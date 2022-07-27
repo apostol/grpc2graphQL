@@ -1,0 +1,157 @@
+"""
+NameSpace: djtestpoms 
+Code result mutation Interface
+Hint: It may be used on fronend to extend error message, as example
+"""
+interface djtestpoms_MutationResponse {
+  "Code of operation result"
+  code: String!
+  "Was the operation successful completed?"
+  success: Boolean!
+  "User-like messages about result of operation"
+  message: String!
+}
+
+"""
+NameSpace: djtestpoms 
+Product object description
+"""
+type djtestpoms_Product {
+  "Unique ID of Product at the database. It not the Query ID type"
+  id: Int
+  name: String
+  color: String
+  price: Float
+  "Category ID of product and linked with djtestpoms_Category"
+  categoryId: Int
+}
+
+"""
+NameSpace: djtestpoms 
+Input Product object description. It use at Request messages"
+"""
+input djtestpoms_EditProductRequest {
+  name: String
+  color: String
+  price: Float
+  "Category ID of product and linked with djtestpoms_Category"
+  categoryId: Int
+}
+
+input djtestpoms_CreateProductRequest {
+  name: String
+  color: String
+  price: Float
+  categoryId: Int
+}
+
+input djtestpoms_GetProductsRequest {
+  ids: [Int]
+}
+
+input djtestpoms_SearchProductsRequest {
+  name: String
+}
+
+
+type djtestpoms_ProductResponse implements djtestpoms_MutationResponse {
+  "Code of operation result"
+  code: String!
+  "Was the operation successful completed?"
+  success: Boolean!
+  "User-like messages about result of operation"
+  message: String!
+  product: djtestpoms_Product
+}
+
+type djtestpoms_Category {
+  id: Int
+  name: String
+}
+
+enum djtestpoms_OrderStatus {
+  CREATED
+  READY_TO_SHIP
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+type djtestpoms_Order {
+  id: Int
+  status: djtestpoms_OrderStatus
+  items: [KeyValuePairType]
+}
+
+input djtestpoms_GetOrdersRequest {
+  id: [Int]
+  status: djtestpoms_OrderStatus
+  items: [KeyValuePairInput]
+}
+
+type djtestpoms_CreateOrderResponse implements djtestpoms_MutationResponse {
+  "Code of operation result"
+  code: String!
+  "Was the operation successful completed?"
+  success: Boolean!
+  "User-like messages about result of operation"
+  message: String!
+  orders: djtestpoms_Order
+}
+
+
+type KeyValuePairType {
+  key: Int
+  value: Int
+}
+
+input KeyValuePairInput {
+  key: Int
+  value: Int
+}
+
+
+input djtestpoms_CreateOrderRequest {
+  items: [KeyValuePairInput]
+}
+
+type djtestpoms_ChangeOrderStatus {
+  orderId: Int
+  status: djtestpoms_OrderStatus
+}
+
+input djtestpoms_ChangeOrderStatusRequest {
+  orderId: Int
+  status: djtestpoms_OrderStatus
+}
+
+type djtestpoms_ChangeOrderStatusResponse implements djtestpoms_MutationResponse {
+  "Code of operation result"
+  code: String!
+  "Was the operation successful completed?"
+  success: Boolean!
+  "User-like messages about result of operation"
+  message: String!
+  order: djtestpoms_ChangeOrderStatus
+}
+
+# the schema allows the following query:
+type Query {
+  Products(products: djtestpoms_GetProductsRequest): [djtestpoms_Product],
+  Categories: [djtestpoms_Category],
+  Orders(orders: djtestpoms_GetOrdersRequest): [djtestpoms_Order]
+}
+
+type Mutation {
+  CreateProduct(createProductRequest: djtestpoms_CreateProductRequest): djtestpoms_ProductResponse,
+  EditProduct(editProductRequest: djtestpoms_EditProductRequest): djtestpoms_ProductResponse,
+  CreateOrder(createOrderRequest: djtestpoms_CreateOrderRequest): djtestpoms_CreateOrderResponse,
+  ChangeOrderStatus(changeOrderStatusRequest: djtestpoms_ChangeOrderStatusRequest): djtestpoms_ChangeOrderStatusResponse
+}
+
+# we need to tell the server which types represent the root query
+# and root mutation types. We call them RootQuery and RootMutation by convention.
+schema {
+  query: Query,
+  mutation: Mutation
+}

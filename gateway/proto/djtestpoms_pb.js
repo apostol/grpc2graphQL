@@ -1,4 +1,4 @@
-// source: proto/djtestpoms.proto
+// source: djtestpoms.proto
 /**
  * @fileoverview
  * @enhanceable

@@ -4,9 +4,6 @@ import { IStoreManagerClient, StoreManagerClient } from '../../proto/djtestpoms_
 import { GetProductsRequest, Product, ProductStreamResponse } from '../../proto/djtestpoms_pb';
 import { ClientReadableStream } from '@grpc/grpc-js';
 
-//import * as grpc from 'grpc';
-//import * as protoLoader from '@grpc/proto-loader';
-
 export default class djTestPomsAPI extends grpcDataSource {
   client: IStoreManagerClient;
   private _apiKey: string;
@@ -20,11 +17,6 @@ export default class djTestPomsAPI extends grpcDataSource {
         this._apiHost,
         grpc.credentials.createInsecure(),
     );
-  }
-
-  willSendRequest(request: Request) {
-    //on a future :)
-    request.headers.set('Authorization', `Bearer ${this.context.token}`);
   }
 
   async getProducts(ids: number[]):Promise<Product.AsObject[]> {
