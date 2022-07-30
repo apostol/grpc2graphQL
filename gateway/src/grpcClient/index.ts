@@ -1,7 +1,7 @@
 import * as grpc from '@grpc/grpc-js';
 import grpcDataSource from '../grpcDataSource';
 import { IStoreManagerClient, StoreManagerClient } from '../../proto/djtestpoms_grpc_pb';
-import { GetProductsRequest, Product, ProductStreamResponse } from '../../proto/djtestpoms_pb';
+import { Category, EmptyRequest, GetProductsRequest, Product, ProductStreamResponse } from '../../proto/djtestpoms_pb';
 import { ClientReadableStream } from '@grpc/grpc-js';
 
 export default class djTestPomsAPI extends grpcDataSource {
@@ -40,5 +40,23 @@ export default class djTestPomsAPI extends grpcDataSource {
       });
     });
   };
-}
 
+  async getCategories(id: number): Promise<Category.AsObject>{
+    return new Promise<Category.AsObject>((resolve) => {
+      let result: Category.AsObject
+      const request = new EmptyRequest()
+      request.setApikey(this._apiKey)
+      console.log(`[getCategories] Request: ${JSON.stringify(request.toObject())}`);
+      const stream: ClientReadableStream<Category> = this.client.getCategories(request)
+      stream.on("data", (data: Category) => {
+        console.log(`[getCategory] Category: ${JSON.stringify(data.toObject())}`);
+        if (data.getId() == id)
+          result = data.toObject()
+      });
+      stream.on("end", () => {
+        console.log("[getCategory] Done.");
+        resolve(result);
+      });
+    });
+  }
+}

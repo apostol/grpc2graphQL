@@ -7,8 +7,10 @@ services:
     build:
       context: ./grpc-server
       dockerfile: ./Dockerfile
-#    ports:
-#      - 4001:8080
+      args:
+        api_key: myAPI
+    ports:
+      - 8080:8080
     networks:
       test_network:
         ipv4_address: 192.168.1.2

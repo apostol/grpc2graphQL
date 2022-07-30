@@ -23,7 +23,7 @@ type djtestpoms_Product {
   color: String
   price: Float
   "Category ID of product and linked with djtestpoms_Category"
-  categoryId: Int
+  categoryId: djtestpoms_Category
 }
 
 """
