@@ -233,7 +233,6 @@ export namespace Order {
     export type AsObject = {
         id: number,
         status: OrderStatus,
-
         itemsMap: Array<[number, number]>,
     }
 }
@@ -258,7 +257,6 @@ export class CreateOrderRequest extends jspb.Message {
 export namespace CreateOrderRequest {
     export type AsObject = {
         apikey: string,
-
         itemsMap: Array<[number, number]>,
     }
 }

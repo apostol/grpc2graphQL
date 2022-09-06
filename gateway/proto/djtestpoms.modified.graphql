@@ -96,7 +96,7 @@ type djtestpoms_CreateOrderResponse implements djtestpoms_MutationResponse {
   success: Boolean!
   "User-like messages about result of operation"
   message: String!
-  orders: djtestpoms_Order
+  order: djtestpoms_Order
 }
 
 
